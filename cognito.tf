@@ -1,7 +1,9 @@
 resource "aws_cognito_user_pool" "_" {
   name = var.domain_name
 
-  username_attributes = ["email"]
+  username_attributes      = ["email"]
+  
+  auto_verified_attributes = ["email"]
 
   username_configuration {
     case_sensitive = false
