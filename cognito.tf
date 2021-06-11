@@ -24,7 +24,8 @@ resource "aws_cognito_user_pool" "_" {
   }
 
   lambda_config {
-    custom_message = aws_lambda_function.custom_message.arn
+    custom_message    = aws_lambda_function.custom_message.arn
+    post_confirmation = aws_lambda_function.post_confirmation.arn
   }
 
   account_recovery_setting {
@@ -33,6 +34,46 @@ resource "aws_cognito_user_pool" "_" {
       priority = 1
     }
   }
+
+  schema {
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = true
+    name                     = "invitedBy"
+    required                 = false
+
+    string_attribute_constraints {
+      min_length = 3
+      max_length = 32
+    }
+  }
+
+  schema {
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = true
+    name                     = "orgInviteBy"
+    required                 = false
+
+    string_attribute_constraints {
+      min_length = 3
+      max_length = 40
+    }
+  }
+
+  schema {
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = true
+    name                     = "organisationId"
+    required                 = false
+
+    string_attribute_constraints {
+      min_length = 3
+      max_length = 40
+    }
+  }
+
 }
 
 resource "aws_cognito_user_pool_client" "_" {

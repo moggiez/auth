@@ -14,6 +14,15 @@ resource "aws_iam_role" "iam_for_lambda" {
       }
     ]
   })
+
+  managed_policy_arns = [
+    aws_iam_policy.dynamodb_access_policy_organisations.arn,
+    aws_iam_policy.s3_access.arn
+  ]
+}
+
+data "aws_lambda_layer_version" "db" {
+  layer_name = "moggies_layer_db"
 }
 
 resource "aws_lambda_function" "custom_message" {
@@ -24,4 +33,18 @@ resource "aws_lambda_function" "custom_message" {
   source_code_hash = filebase64sha256("./dist/custom_message.zip")
 
   runtime = "nodejs14.x"
+}
+
+resource "aws_lambda_function" "post_confirmation" {
+  filename         = "./dist/post_confirmation.zip"
+  function_name    = "cognito_trigger_post_confirmation"
+  role             = aws_iam_role.iam_for_lambda.arn
+  handler          = "index.handler"
+  source_code_hash = filebase64sha256("./dist/post_confirmation.zip")
+
+  runtime = "nodejs14.x"
+
+  layers = [
+    data.aws_lambda_layer_version.db.arn
+  ]
 }

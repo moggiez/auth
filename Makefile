@@ -4,14 +4,11 @@ infra-init:
 infra-debug:
 	TF_LOG=DEBUG terraform apply -auto-approve infra
 
-
 build-cleanup:
 	rm -rf ./dist/* & mkdir -p dist
 
-build-custom-message:
-	cd code/cognito_triggers/custom_message && zip -r ../../../dist/custom_message.zip ./
-
-build: build-cleanup build-custom-message
+build: build-cleanup
+	./scripts/package_all.sh
 
 deploy: build
 	terraform init && terraform apply -auto-approve

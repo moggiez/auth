@@ -30,3 +30,4 @@ override.tf.json
 
 # Lambda builds
 dist/
+**/node_modules/
