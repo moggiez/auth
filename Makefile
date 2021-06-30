@@ -21,3 +21,5 @@ fmt:
 
 undeploy:
 	terraform destroy
+npm-auth:
+	aws codeartifact login --tool npm --repository team-npm --domain moggies-io --domain-owner 989665778089

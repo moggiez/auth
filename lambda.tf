@@ -21,10 +21,6 @@ resource "aws_iam_role" "iam_for_lambda" {
   ]
 }
 
-data "aws_lambda_layer_version" "db" {
-  layer_name = "moggies_layer_db"
-}
-
 resource "aws_lambda_function" "custom_message" {
   filename         = "./dist/custom_message.zip"
   function_name    = "cognito_trigger_custom_message"
@@ -44,7 +40,5 @@ resource "aws_lambda_function" "post_confirmation" {
 
   runtime = "nodejs14.x"
 
-  layers = [
-    data.aws_lambda_layer_version.db.arn
-  ]
+  layers = []
 }

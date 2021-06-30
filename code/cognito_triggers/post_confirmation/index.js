@@ -1,4 +1,4 @@
-const db = require("db");
+const db = require("moggies-db");
 const uuid = require("uuid");
 const organisations = new db.Table(db.tableConfigs.organisations);
 
