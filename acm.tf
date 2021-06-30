@@ -8,7 +8,8 @@ resource "aws_acm_certificate" "_" {
   lifecycle {
     create_before_destroy = true
   }
-  tags {
+
+  tags = {
     Name = "Auth domain cert"
   }
 }
