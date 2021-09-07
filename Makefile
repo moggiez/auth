@@ -21,5 +21,12 @@ fmt:
 
 undeploy:
 	terraform destroy
+
+update-custom_message-lambda: build
+	aws lambda update-function-code --function-name cognito_trigger_custom_message --zip-file fileb://$(shell pwd)/dist/custom_message.zip --publish | jq .FunctionArn
+
+update-post_confirmation-lambda: build
+	aws lambda update-function-code --function-name cognito_trigger_post_confirmation --zip-file fileb://$(shell pwd)/dist/post_confirmation.zip --publish | jq .FunctionArn
+
 npm-auth:
 	aws codeartifact login --tool npm --repository team-npm --domain moggies-io --domain-owner 989665778089
