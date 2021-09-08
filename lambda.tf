@@ -27,8 +27,8 @@ resource "aws_lambda_function" "custom_message" {
   role             = aws_iam_role.iam_for_lambda.arn
   handler          = "index.handler"
   source_code_hash = filebase64sha256("./dist/custom_message.zip")
-
-  runtime = "nodejs14.x"
+  timeout          = 60
+  runtime          = "nodejs14.x"
 }
 
 resource "aws_lambda_function" "post_confirmation" {
@@ -37,8 +37,8 @@ resource "aws_lambda_function" "post_confirmation" {
   role             = aws_iam_role.iam_for_lambda.arn
   handler          = "index.handler"
   source_code_hash = filebase64sha256("./dist/post_confirmation.zip")
-
-  runtime = "nodejs14.x"
+  timeout          = 60
+  runtime          = "nodejs14.x"
 
   layers = []
 }
